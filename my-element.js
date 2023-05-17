@@ -1,75 +1,64 @@
-/**
- * @license
- * Copyright 2019 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */
+import {LitElement, html} from 'lit';
 
-import {LitElement, html, css} from 'lit';
-
-/**
- * An example element.
- *
- * @fires count-changed - Indicates when the count changes
- * @slot - This element has a slot
- * @csspart button - The button
- */
 export class MyElement extends LitElement {
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        border: solid 1px gray;
-        padding: 16px;
-        max-width: 800px;
-      }
-    `;
-  }
-
-  static get properties() {
-    return {
-      /**
-       * The name to say "Hello" to.
-       * @type {string}
-       */
-      name: {type: String},
-
-      /**
-       * The number of times the button has been clicked.
-       * @type {number}
-       */
-      count: {type: Number},
-    };
-  }
+  static properties = {
+    version: {},
+    name: {},
+    surname: {},
+    description: {}
+  };
 
   constructor() {
     super();
-    this.name = 'World';
-    this.count = 0;
+    this.version = 'STARTING';
+    this.name = '';
+    this.surname = '';
+    this.description = '';
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.copyValuesBetweenSections();
   }
 
   render() {
     return html`
-      <h1>${this.sayHello(this.name)}!</h1>
-      <button @click=${this._onClick} part="button">
-        Click Count: ${this.count}
-      </button>
-      <slot></slot>
+      <p>Welcome to the Lit tutorial!</p>
+      <p>This is the ${this.version} code.</p>
+      <label for="name">Name:</label>
+      <input id="name" type="text" .value=${this.name} @input=${this.updateName}>
+      <label for="surname">Surname:</label>
+      <input id="surname" type="text" .value=${this.surname} @input=${this.updateSurname}>
+      <label for="description">Description:</label>
+      <textarea id="description" .value=${this.description} @input=${this.updateDescription}></textarea>
     `;
   }
 
-  _onClick() {
-    this.count++;
-    this.dispatchEvent(new CustomEvent('count-changed'));
+  updateName(event) {
+    this.name = event.target.value;
   }
 
-  /**
-   * Formats a greeting
-   * @param name {string} The name to say "Hello" to
-   * @returns {string} A greeting directed at `name`
-   */
-  sayHello(name) {
-    return `Hello, ${name}`;
+  updateSurname(event) {
+    this.surname = event.target.value;
+  }
+
+  updateDescription(event) {
+    this.description = event.target.value;
+  }
+
+  copyValuesBetweenSections() {
+    var numOfClicks = document.documentElement.querySelectorAll('[formcontrolid="fc_1d2c3c8e8556462fb5107b35b9785e23"] .ntx-repeating-section-repeated-section').length - 1;
+
+    for (var i = 0, j = numOfClicks; i < j; i++) {
+      document.documentElement.querySelector('[formcontrolid="fc_f7edea3c7bbc474ba19424f8e5269e62"] .btn-repeating-section-new-row').click();
+    }
+
+    var readOnlyTextShort = document.documentElement.querySelectorAll('[formcontrolid="fc_1d2c3c8e8556462fb5107b35b9785e23"] input:not([type="checkbox"])');
+
+    readOnlyTextShort.forEach(function(input) {
+      document.documentElement.querySelector(`[formcontrolid="fc_f7edea3c7bbc474ba19424f8e5269e62"] [aria-label="${input.ariaLabel}"]`).value = input.value;
+    });
   }
 }
 
-window.customElements.define('my-element', MyElement);
+customElements.define('my-element', MyElement);
