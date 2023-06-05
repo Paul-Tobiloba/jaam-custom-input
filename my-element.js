@@ -1,12 +1,18 @@
 import {LitElement, html} from 'lit';
-
+// import { PluginContract, PropType as PluginProperty } from '@nintex/form-plugin-contract';
 export class MyElement extends LitElement {
-  static properties = {
-    version: {},
-    name: {},
-    surname: {},
-    description: {}
-  };
+  static getMetaConfig() {
+    return {
+      controlName: 'MyElement',
+      fallbackDisableSubmit: false,
+      version: '1.2',
+      properties: {
+        name: {},
+        surname: {},
+        description: {}
+      }
+    };
+  }	
 
   constructor() {
     super();
@@ -20,6 +26,8 @@ export class MyElement extends LitElement {
     super.connectedCallback();
     this.copyValuesBetweenSections();
   }
+
+
 
   render() {
     return html`

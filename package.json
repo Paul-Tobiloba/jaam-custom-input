@@ -39,6 +39,7 @@
   "author": "Google LLC",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "@nintex/form-plugin-contract": "^1.0.0-beta.3",
     "lit": "^2.2.4"
   },
   "devDependencies": {
