@@ -111,6 +111,6 @@ export class EditableRepeatingSection extends LitElement {
 
 // registering the web component
 
-const elementName = 'jaam-copy-repeating-section';
+const elementName = 'jaam-repeating-section';
 
 customElements.define(elementName, EditableRepeatingSection);
